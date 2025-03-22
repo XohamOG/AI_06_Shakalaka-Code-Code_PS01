@@ -53,19 +53,7 @@ function App() {
           }
         />
 
-        {/* Chat Page */}
-        <Route
-          path="/chat"
-          element={
-            <AppContainer>
-              <Sidebar />
-              <ContentContainer>
-                <AvatarChatbot />
-              </ContentContainer>
-            </AppContainer>
-          }
-        />
-      </Routes>
+    </Routes>
     </Router>
   );
 }

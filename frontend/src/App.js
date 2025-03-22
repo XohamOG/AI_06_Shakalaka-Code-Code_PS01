@@ -7,7 +7,9 @@ import ChatHistory from "./components/ChatHistory"; // Import the ChatHistory co
 import Sidebar from "./components/sidebar";
 import SplineBackground from "./components/SplineBackground";
 import AvatarChatbot from "./components/AvatarChatbot";
+import DocumentUploader from "./components/DocumentUploader"; // DocumentUploader component
 import { Box, styled } from "@mui/material";
+import DocumentLayout from "./components/documentLayout";
 
 const AppContainer = styled(Box)({
   display: 'flex',
@@ -60,6 +62,15 @@ function App() {
           <AppContainer>
             <ContentContainer>
               <Customer />
+            </ContentContainer>
+          </AppContainer>
+        } />
+
+        {/* Document Uploader Route */}
+        <Route path="/document-uploader" element={
+          <AppContainer>
+            <ContentContainer>
+              <DocumentLayout />
             </ContentContainer>
           </AppContainer>
         } />

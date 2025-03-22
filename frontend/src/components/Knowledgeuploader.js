@@ -4,20 +4,35 @@ import axios from "axios";
 const KnowledgeUploader = () => {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Replace these with actual values
-  const apiKey = "Z29vZ2xlLW9hdXRoMnwxMDk4NTQ4NTk4MTQ3OTY0MDI2ODg6QlFNaFp6TGN4aEk2WU1wVFZaTXIt";
-  const knowledgeBaseId = "agt_cSWYN6Bt"; // Using Agent ID as Knowledge Base ID (confirm if correct)
+  // API Key should be stored in .env file for security reasons
+  const apiKey = process.env.REACT_APP_DID_API_KEY;
+  const knowledgeBaseId = "agt_cSWYN6Bt"; // Confirm if correct
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+    const selectedFile = event.target.files[0];
+
+    // Validate file type
+    const allowedTypes = ["application/pdf", "text/plain", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
+    if (selectedFile && !allowedTypes.includes(selectedFile.type)) {
+      setMessage("Invalid file type. Please upload a PDF, TXT, or DOCX file.");
+      setFile(null);
+      return;
+    }
+
+    setFile(selectedFile);
+    setMessage("");
   };
 
   const uploadKnowledge = async () => {
     if (!file) {
-      setMessage("Please select a file.");
+      setMessage("Please select a valid file.");
       return;
     }
+
+    setLoading(true);
+    setMessage("");
 
     const formData = new FormData();
     formData.append("file", file);
@@ -28,7 +43,7 @@ const KnowledgeUploader = () => {
         formData,
         {
           headers: {
-            "Authorization": `Bearer ${apiKey}`,
+            Authorization: `Bearer ${apiKey}`,
             "Content-Type": "multipart/form-data",
           },
         }
@@ -38,16 +53,29 @@ const KnowledgeUploader = () => {
       console.log("Response:", response.data);
     } catch (error) {
       console.error("Error uploading document:", error);
-      setMessage("Failed to upload document.");
+
+      if (error.response) {
+        setMessage(`Error: ${error.response.data.message || "Upload failed."}`);
+      } else {
+        setMessage("Network error. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
+    <div style={{ textAlign: "center", padding: "20px", maxWidth: "400px", margin: "auto", border: "1px solid #ddd", borderRadius: "10px" }}>
       <h2>Upload Knowledge Document</h2>
       <input type="file" onChange={handleFileChange} accept=".pdf,.txt,.docx" />
-      <button onClick={uploadKnowledge}>Upload</button>
-      {message && <p>{message}</p>}
+      <button 
+        onClick={uploadKnowledge} 
+        disabled={loading} 
+        style={{ display: "block", marginTop: "10px", padding: "10px", backgroundColor: loading ? "#aaa" : "#007BFF", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}
+      >
+        {loading ? "Uploading..." : "Upload"}
+      </button>
+      {message && <p style={{ color: message.includes("successfully") ? "green" : "red" }}>{message}</p>}
     </div>
   );
 };

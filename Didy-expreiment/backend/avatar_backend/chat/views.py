@@ -33,38 +33,67 @@ def ask_question(request):
     except Exception as e:
         return Response({"error": "Failed to fetch response from OpenAI", "details": str(e)}, status=500)
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 @api_view(["POST"])
 def generate_avatar_response(request):
-    text = request.data.get("text", "").strip()
+    if request.method != "POST":
+        return Response({"error": "Only POST requests are allowed"}, status=405)
 
-    # Check if text is empty
+    text = request.data.get("text", "").strip()
     if not text:
         return Response({"error": "Text input is required"}, status=400)
 
+    # D-ID API endpoint for talk API
+    url = "https://api.d-id.com/talks"
+    
+    headers = {
+        "Authorization": "Basic Z29vZ2xlLW9hdXRoMnwxMDg0ODM3Njg3MjU2MDQ2ODU3MzI6T3I3Yi0wOUwwSnVBb0xFN00wMVJC",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "script": {
+            "type": "text",
+            "input": text,
+            "provider": {
+                "type": "microsoft",
+                "voice_id": "en-US-JennyNeural"
+            }
+        },
+        "config": {
+            "fluent": True,
+            "pad_audio": 0,
+            "driver_expressions": {
+                "expressions": [
+                    {"expression": "neutral", "intensity": 0.7}
+                ]
+            }
+        },
+        "agent_id": "agt_-WkTVsoG"
+    }
+
     try:
-        response = requests.post(
-            "https://api.d-id.com/talks/streams",
-            headers={
-                "Authorization": f"Bearer {D_ID_API_KEY}",
-                "Content-Type": "application/json"
-            },
-            json={
-                "source_url": D_ID_AGENT_URL,  # Your D-ID agent URL
-                "script": {"type": "text", "input": text},
-                "voice": "en-US-Wavenet-D"  # Adjust voice settings as needed
-            },
-        ).json()
+        response = requests.post(url, json=payload, headers=headers)
+        response.raise_for_status()
+        
+        # Get the talk ID from the response
+        talk_id = response.json().get("id")
+        
+        # Return the talk ID which can be used to fetch the result
+        return Response({
+            "status": "success",
+            "talk_id": talk_id,
+            "message": "Avatar response generation initiated"
+        })
 
-        if "stream_url" in response:
-            return Response({"video_url": response["stream_url"]})
-        else:
-            return Response({"error": "Failed to generate avatar response", "details": response}, status=500)
-
-    except Exception as e:
-        return Response({"error": "D-ID API request failed", "details": str(e)}, status=500)
-
-
+    except requests.exceptions.RequestException as e:
+        return Response({
+            "error": "Failed to generate avatar response",
+            "details": str(e)
+        }, status=500)
+    
 @api_view(["POST"])
 def upload_document(request):
     serializer = DocumentSerializer(data=request.data)
@@ -79,3 +108,21 @@ def list_faqs(request):
     faqs = FAQ.objects.all()
     serializer = FAQSerializer(faqs, many=True)
     return Response(serializer.data)
+
+@api_view(["GET"])
+def check_talk_status(request, talk_id):
+    url = f"https://api.d-id.com/talks/{talk_id}"
+    
+    headers = {
+        "Authorization": "Basic Z29vZ2xlLW9hdXRoMnwxMDg0ODM3Njg3MjU2MDQ2ODU3MzI6T3I3Yi0wOUwwSnVBb0xFN00wMVJC"
+    }
+
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        return Response(response.json())
+    except requests.exceptions.RequestException as e:
+        return Response({
+            "error": "Failed to check talk status",
+            "details": str(e)
+        }, status=500)

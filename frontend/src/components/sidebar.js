@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/Sidebar.css";
-import { FaHome, FaFileAlt, FaChartBar, FaUserTie, FaLifeRing } from "react-icons/fa";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
@@ -35,17 +33,17 @@ const Sidebar = () => {
       <ul>
         <li>
           <Link to="home" className={({ isActive }) => (isActive ? "active" : "")}>
-            <FaHome className="icon" /> Home
+            {/* <FaHome className="icon" /> Home */}
           </Link>
         </li>
         <li>
           <Link to="interview">
-            <FaUserTie className="icon" /> Start Interview
+            {/* <FaUserTie className="icon" /> Start Interview */}
           </Link>
         </li>
         <li>
           <Link to="/interview-sessions">
-            <FaFileAlt className="icon" /> Interview Sessions
+            {/* <FaFileAlt className="icon" /> Interview Sessions */}
           </Link>
         </li>
       </ul>
@@ -62,4 +60,4 @@ const Sidebar = () => {
   );
 };
 
-export default InterviewerSidebar;
+export default Sidebar;

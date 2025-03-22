@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import Employer from "./components/Employee"; // Employer component
 import Customer from "./components/Customer"; // Customer component
+import DocumentUploader from "./components/DocumentUploader"; // DocumentUploader component
 import { Box, styled } from "@mui/material";
+import DocumentLayout from "./components/documentLayout";
 
 const AppContainer = styled(Box)({
   display: 'flex',
@@ -41,6 +43,15 @@ function App() {
           <AppContainer>
             <ContentContainer>
               <Customer />
+            </ContentContainer>
+          </AppContainer>
+        } />
+
+        {/* Document Uploader Route */}
+        <Route path="/document-uploader" element={
+          <AppContainer>
+            <ContentContainer>
+              <DocumentLayout />
             </ContentContainer>
           </AppContainer>
         } />

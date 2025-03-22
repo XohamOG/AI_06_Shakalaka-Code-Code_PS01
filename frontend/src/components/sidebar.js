@@ -87,7 +87,7 @@ const Sidebar = () => {
     <StyledSidebar className="sidebar">
       <LogoContainer className="logo-container">
         <img 
-          src="/assets/icon.jpeg" 
+          src="/Nexbot logo.png" 
           alt="Logo" 
           className="logo" 
           style={{ 

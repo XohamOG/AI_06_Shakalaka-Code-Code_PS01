@@ -1,15 +1,20 @@
 import React from "react";
-import Layout from "./Layout"; // Import the updated Layout component
+import Layout from "./Layout"; // Import Layout component
+import AvatarChatbot from "./AvatarChatbot"; // Import AvatarChatbot component
 import { Routes, Route } from "react-router-dom";
 
-const Interviewee = () => {
+const Customer = () => {
   return (
     <Layout>
+      {/* Chatbot Component */}
+      <AvatarChatbot />
+
+      {/* Define Routes (if needed) */}
       <Routes>
-        {/* <Route path="home" element={<Home />} /> */}
+        {/* Add your routes here */}
       </Routes>
     </Layout>
   );
 };
 
-export default Interviewee;
+export default Customer;

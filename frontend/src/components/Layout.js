@@ -1,7 +1,6 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
 import Sidebar from "./sidebar";
-
+import SplineBackground from "./SplineBackground";
 import { Box, styled } from "@mui/material";
 
 const LayoutContainer = styled(Box)({
@@ -9,6 +8,7 @@ const LayoutContainer = styled(Box)({
   height: "100vh",
   width: "100%",
   overflow: "hidden",
+  position: "relative",
 });
 
 const ContentContainer = styled(Box)({
@@ -18,18 +18,22 @@ const ContentContainer = styled(Box)({
   overflow: "auto",
   height: "100vh",
   padding: "20px",
-  background: "#f4f6f9",
+  background: "rgba(244, 246, 249, 0.85)", // Slight transparency to blend with Spline
+  position: "relative",
+  zIndex: 1, // Ensure content appears above background
 });
 
-function Layout() {
+function Layout({ children }) {
   return (
     <LayoutContainer>
+      {/* 3D Spline Background */}
+      <SplineBackground />
+
       {/* Sidebar */}
       <Sidebar />
 
-    
-
-    
+      {/* Main Content */}
+      <ContentContainer>{children}</ContentContainer>
     </LayoutContainer>
   );
 }

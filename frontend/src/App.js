@@ -1,11 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
-import Employer from "./components/Employee"; // Added Employer
-import Customer from "./components/Customer"; // Added Customer
-import AvatarChatbot from "./components/AvatarChatbot";
-import Sidebar from "./components/sidebar";
-import SplineBackground from "./components/SplineBackground";
+import Employer from "./components/Employee"; // Employer component
+import Customer from "./components/Customer"; // Customer component
 import { Box, styled } from "@mui/material";
 
 const AppContainer = styled(Box)({
@@ -21,18 +18,34 @@ const ContentContainer = styled(Box)({
   overflow: 'auto',
   height: '100vh',
   position: 'relative',
-  zIndex: 1, // Ensure content appears above background
+  zIndex: 1, // Ensures content appears above background
 });
 
 function App() {
   return (
-    <AppContainer className="App">
-      <SplineBackground />
-      <Sidebar />
-      <ContentContainer>
-        <AvatarChatbot />
-      </ContentContainer>
-    </AppContainer>
+    <Router>
+      <Routes>
+        {/* Landing Page */}
+        <Route path="/" element={<LandingPage />} />
+
+        {/* Employer & Customer Routes */}
+        <Route path="/employer" element={
+          <AppContainer>
+            <ContentContainer>
+              <Employer />
+            </ContentContainer>
+          </AppContainer>
+        } />
+
+        <Route path="/customer" element={
+          <AppContainer>
+            <ContentContainer>
+              <Customer />
+            </ContentContainer>
+          </AppContainer>
+        } />
+      </Routes>
+    </Router>
   );
 }
 

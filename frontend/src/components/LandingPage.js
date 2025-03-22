@@ -15,7 +15,7 @@ const LandingPage = () => {
       />
 
       <div className="overlay">
-        <h1>Welcome to Emotion Viewer</h1>
+        <h1>Welcome to NexBot</h1>
         <p>Select your role:</p>
         <div className="buttons">
           <button className="btn employer" onClick={() => navigate("/employer")}>

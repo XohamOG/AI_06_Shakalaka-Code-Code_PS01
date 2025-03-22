@@ -7,7 +7,6 @@ import AvatarChatbot from "./components/AvatarChatbot";
 import Sidebar from "./components/sidebar";
 import SplineBackground from "./components/SplineBackground";
 import { Box, styled } from "@mui/material";
-import KnowledgeUploader from "./components/Knowledgeuploader";
 
 const AppContainer = styled(Box)({
   display: 'flex',
@@ -28,7 +27,11 @@ const ContentContainer = styled(Box)({
 function App() {
   return (
     <AppContainer className="App">
-      <KnowledgeUploader />
+      <SplineBackground />
+      <Sidebar />
+      <ContentContainer>
+        <AvatarChatbot />
+      </ContentContainer>
     </AppContainer>
   );
 }

@@ -123,12 +123,12 @@ const Sidebar = () => {
         </NavItem>
         <NavItem>
           <NavLink>
-            <FaUserTie className="icon" /> Profile
+            <FaUserTie className="icon" /> Avatars
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink>
-            <FaFileAlt className="icon" /> Chat history
+            <FaFileAlt className="icon" /> Upload Document
           </NavLink>
         </NavItem>
       </NavList>
@@ -141,7 +141,7 @@ const Sidebar = () => {
             textShadow: '0 1px 2px rgba(0,0,0,0.3)'
           }}
         >
-          © 2025  Nexbot
+          © 2025 Nexbot
         </Typography>
       </Box>
     </StyledSidebar>

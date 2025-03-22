@@ -6,8 +6,10 @@ from rest_framework.decorators import api_view
 from .models import FAQ, Document
 from .serializers import FAQSerializer, DocumentSerializer
 
-D_ID_API_KEY = '#'
-OPENAI_API_KEY = '#'
+D_ID_API_KEY = "amFpa3NkZXNhckBnbWFpbC5jb20:2Kvu_Oz56kresUrVghPSp"
+OPENAI_API_KEY = "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"
+D_ID_AGENT_URL = "https://studio.d-id.com/agents/share?id=agt_-WkTVsoG"  # Your agent's share URL
+
 
 @api_view(["POST"])
 def ask_question(request):
@@ -27,7 +29,7 @@ def ask_question(request):
         ).json()
 
         return Response({"answer": openai_response["choices"][0]["message"]["content"]})
-    
+
     except Exception as e:
         return Response({"error": "Failed to fetch response from OpenAI", "details": str(e)}, status=500)
 
@@ -48,9 +50,9 @@ def generate_avatar_response(request):
                 "Content-Type": "application/json"
             },
             json={
-                "source_url": "https://your-avatar-url.com/avatar.jpg",  # Replace with your avatar image URL
+                "source_url": D_ID_AGENT_URL,  # Your D-ID agent URL
                 "script": {"type": "text", "input": text},
-                "voice": "en-US-Wavenet-D"  # Choose an appropriate voice from D-ID
+                "voice": "en-US-Wavenet-D"  # Adjust voice settings as needed
             },
         ).json()
 

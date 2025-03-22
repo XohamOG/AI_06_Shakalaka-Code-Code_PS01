@@ -160,23 +160,23 @@ const ChatHistory = () => {
           {
             id: 'chat_123456',
             created_at: '2025-03-20T14:30:00Z',
-            title: 'Interview Practice Session',
+            title: 'Product Inquiry - Software Suite',
             messages: [
-              { sender: 'user', message: 'Hello, I would like to practice for a job interview.' },
-              { sender: 'ai', message: 'Hi there! I\'d be happy to help you practice for your job interview. What kind of position are you interviewing for?' },
-              { sender: 'user', message: 'I have an interview for a software developer position.' },
-              { sender: 'ai', message: 'Great! For a software developer position, you might expect questions about your technical skills, problem-solving abilities, and past experiences. Would you like me to ask you some common interview questions?' }
+              { sender: 'user', message: 'Hello, I am interested in your software suite for project management.' },
+              { sender: 'ai', message: 'Hi! Thank you for your interest. Our software suite offers comprehensive tools for project management. Could you share your specific requirements?' },
+              { sender: 'user', message: 'We need tools for task tracking, team collaboration, and reporting.' },
+              { sender: 'ai', message: 'That sounds great. Our suite includes features for task tracking, real-time collaboration, and detailed reporting. Would you like a demo or pricing details?' }
             ]
           },
           {
             id: 'chat_789012',
             created_at: '2025-03-22T10:15:00Z',
-            title: 'Mock Interview - Data Scientist',
+            title: 'Service Inquiry - Customer Support',
             messages: [
-              { sender: 'user', message: 'Can we do a mock interview for a data scientist role?' },
-              { sender: 'ai', message: 'Absolutely! I\'d be happy to conduct a mock interview for a data scientist role. Let\'s begin with some typical questions. Tell me about your experience with machine learning algorithms.' },
-              { sender: 'user', message: 'I have worked with various supervised learning algorithms including regression, decision trees, and neural networks.' },
-              { sender: 'ai', message: 'That\'s great. Could you share a specific project where you applied one of these algorithms and what challenges you faced?' }
+              { sender: 'user', message: 'Can you provide details about your customer support services?' },
+              { sender: 'ai', message: 'Of course! We offer 24/7 customer support through multiple channels including chat, email, and phone. Could you let me know the scale of support you are looking for?' },
+              { sender: 'user', message: 'We are a mid-sized business with around 500 customers.' },
+              { sender: 'ai', message: 'Thank you for sharing. We can tailor our support services to meet your needs. Would you like to discuss pricing or schedule a call with our team?' }
             ]
           }
         ];

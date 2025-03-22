@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
+import { FaHome, FaUserTie, FaFileAlt } from "react-icons/fa";
 
 const StyledSidebar = styled('div')({
   width: '240px',
@@ -19,6 +20,32 @@ const LogoContainer = styled(Box)({
   borderBottom: '1px solid #333',
 });
 
+const NavList = styled('ul')({
+  listStyle: 'none',
+  padding: '0',
+  margin: '20px 0',
+});
+
+const NavItem = styled('li')({
+  margin: '8px 0',
+});
+
+const NavLink = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  padding: '10px 20px',
+  color: '#fff',
+  textDecoration: 'none',
+  cursor: 'pointer',
+  '&:hover': {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  '& .icon': {
+    marginRight: '10px',
+    fontSize: '18px',
+  }
+});
+
 const Sidebar = () => {
   return (
     <StyledSidebar className="sidebar">
@@ -30,23 +57,23 @@ const Sidebar = () => {
           style={{ width: '80px', borderRadius: '50%' }} 
         />
       </LogoContainer>
-      <ul>
-        <li>
-          <Link to="home" className={({ isActive }) => (isActive ? "active" : "")}>
-            {/* <FaHome className="icon" /> Home */}
-          </Link>
-        </li>
-        <li>
-          <Link to="interview">
-            {/* <FaUserTie className="icon" /> Start Interview */}
-          </Link>
-        </li>
-        <li>
-          <Link to="/interview-sessions">
-            {/* <FaFileAlt className="icon" /> Interview Sessions */}
-          </Link>
-        </li>
-      </ul>
+      <NavList>
+        <NavItem>
+          <NavLink>
+            <FaHome className="icon" /> Home
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink>
+            <FaUserTie className="icon" /> Start Interview
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink>
+            <FaFileAlt className="icon" /> Interview Sessions
+          </NavLink>
+        </NavItem>
+      </NavList>
       <Box mt="auto" p={2}>
         <Typography 
           variant="body2" 

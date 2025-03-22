@@ -1,4 +1,8 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LandingPage from "./components/LandingPage";
+import Employer from "./components/Employee"; // Added Employer
+import Customer from "./components/Customer"; // Added Customer
 import AvatarChatbot from "./components/AvatarChatbot";
 import Sidebar from "./components/sidebar";
 import SplineBackground from "./components/SplineBackground";

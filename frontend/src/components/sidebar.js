@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { FaHome, FaUserTie, FaFileAlt } from "react-icons/fa";
@@ -54,7 +54,7 @@ const NavItem = styled('li')({
   margin: '12px 0',
 });
 
-const NavLink = styled('div')({
+const NavLinkStyled = styled(Link)({
   display: 'flex',
   alignItems: 'center',
   padding: '12px 16px',
@@ -100,6 +100,9 @@ const NavLink = styled('div')({
 });
 
 const Sidebar = () => {
+  const location = useLocation();
+  const path = location.pathname;
+
   return (
     <StyledSidebar className="sidebar">
       <LogoContainer className="logo-container">
@@ -117,19 +120,28 @@ const Sidebar = () => {
       </LogoContainer>
       <NavList>
         <NavItem>
-          <NavLink className="active">
+          <NavLinkStyled 
+            to="/app/home" 
+            className={path === "/app/home" || path === "/app/" ? "active" : ""}
+          >
             <FaHome className="icon" /> Home
-          </NavLink>
+          </NavLinkStyled>
         </NavItem>
         <NavItem>
-          <NavLink>
+          <NavLinkStyled 
+            to="/app/profile" 
+            className={path === "/app/profile" ? "active" : ""}
+          >
             <FaUserTie className="icon" /> Profile
-          </NavLink>
+          </NavLinkStyled>
         </NavItem>
         <NavItem>
-          <NavLink>
+          <NavLinkStyled 
+            to="/app/chat-history" 
+            className={path === "/app/chat-history" ? "active" : ""}
+          >
             <FaFileAlt className="icon" /> Chat history
-          </NavLink>
+          </NavLinkStyled>
         </NavItem>
       </NavList>
       <Box mt="auto" p={2}>
@@ -141,7 +153,7 @@ const Sidebar = () => {
             textShadow: '0 1px 2px rgba(0,0,0,0.3)'
           }}
         >
-          © 2025  Nexbot
+          © 2025 Nexbot
         </Typography>
       </Box>
     </StyledSidebar>

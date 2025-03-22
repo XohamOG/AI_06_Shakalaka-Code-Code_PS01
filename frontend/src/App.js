@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import Employer from "./components/Employee"; // Employer component
 import Customer from "./components/Customer"; // Customer component
+import ChatHistory from "./components/ChatHistory"; // Import the ChatHistory component
+import Sidebar from "./components/sidebar";
+import SplineBackground from "./components/SplineBackground";
+import AvatarChatbot from "./components/AvatarChatbot";
 import { Box, styled } from "@mui/material";
 
 const AppContainer = styled(Box)({
@@ -10,7 +14,7 @@ const AppContainer = styled(Box)({
   height: '100vh',
   width: '100%',
   overflow: 'hidden',
-  position: 'relative',
+  psosition: 'relative',
 });
 
 const ContentContainer = styled(Box)({
@@ -27,6 +31,21 @@ function App() {
       <Routes>
         {/* Landing Page */}
         <Route path="/" element={<LandingPage />} />
+
+        {/* Main App with Sidebar */}
+        <Route path="/app/*" element={
+          <AppContainer>
+            <SplineBackground />
+            <Sidebar />
+            <ContentContainer>
+              <Routes>
+                <Route path="/" element={<AvatarChatbot />} />
+                <Route path="/home" element={<AvatarChatbot />} />
+                <Route path="/chat-history" element={<ChatHistory />} />
+              </Routes>
+            </ContentContainer>
+          </AppContainer>
+        } />
 
         {/* Employer & Customer Routes */}
         <Route path="/employer" element={

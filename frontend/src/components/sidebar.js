@@ -7,9 +7,12 @@ import { FaHome, FaUserTie, FaFileAlt } from "react-icons/fa";
 const StyledSidebar = styled('div')({
   width: '240px',
   height: '100vh',
-  background: '#1e1e1e',
+  background: 'rgba(30, 30, 30, 0.85)', // More transparent background
+  backdropFilter: 'blur(10px)', // Add blur effect to what's behind
   color: '#fff',
   borderRight: '1px solid #333',
+  position: 'relative',
+  zIndex: 2, // Ensure sidebar appears above background
   '& .active': {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     borderRadius: '8px',

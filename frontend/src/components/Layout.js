@@ -18,7 +18,6 @@ const ContentContainer = styled(Box)({
   overflow: "auto",
   height: "100vh",
   padding: "20px",
-  background: "rgba(244, 246, 249, 0.85)", // Slight transparency to blend with Spline
   position: "relative",
   zIndex: 1, // Ensure content appears above background
 });

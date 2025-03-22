@@ -40,6 +40,10 @@ const SessionHeader = styled('div')({
   justifyContent: 'space-between',
   alignItems: 'center',
   marginBottom: '15px',
+  // Adding text color for any elements inside
+  '& h5': {
+    color: '#fff'
+  }
 });
 
 const MessageList = styled(List)({
@@ -58,6 +62,7 @@ const UserMessage = styled('div')({
   borderRadius: '12px 12px 12px 0',
   maxWidth: '80%',
   marginLeft: '10px',
+  color: '#fff', // Changed text color to white
 });
 
 const AIMessage = styled('div')({
@@ -66,6 +71,7 @@ const AIMessage = styled('div')({
   borderRadius: '12px 12px 0 12px',
   maxWidth: '80%',
   marginRight: '10px',
+  color: '#fff', // Changed text color to white
 });
 
 const SenderIcon = styled('div')({
@@ -231,7 +237,7 @@ const ChatHistory = () => {
         chatSessions.map((session) => (
           <ChatSessionCard key={session.id}>
             <SessionHeader>
-              <Typography variant="h5" fontWeight="600">
+              <Typography variant="h5" fontWeight="600" color="#fff">
                 {session.title || 'Chat Session'}
               </Typography>
               <Typography variant="body2" color="rgba(255,255,255,0.7)">

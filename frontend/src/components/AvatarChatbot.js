@@ -5,10 +5,10 @@ function DIDChatbot() {
     // ✅ Load D-ID chatbot script dynamically
     const script = document.createElement("script");
     script.type = "module";
-    script.src="https://studio.d-id.com/agents/share?id=agt_cSWYN6Bt";
+    script.src="https://agent.d-id.com/v1/index.js";
     script.setAttribute("data-name", "did-agent");
-    script.setAttribute("data-mode", "inline"); // Change to "widget" or "fullscreen" if needed
-    script.setAttribute("data-client-key", "MjAyMy5zb2hhbS5wYXRpbEB2ZXMuYWMuaW4:VYdyQkAhPq1cjxhKOBlG-");
+    script.setAttribute("data-mode", "fabio"); // Change to "widget" or "fullscreen" if needed
+    script.setAttribute("data-client-key", "Z29vZ2xlLW9hdXRoMnwxMDk4NTQ4NTk4MTQ3OTY0MDI2ODg6QlFNaFp6TGN4aEk2WU1wVFZaTXIt");
     script.setAttribute("data-agent-id", "agt_cSWYN6Bt");
     script.setAttribute("data-monitor", "true");
 

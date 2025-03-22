@@ -6,8 +6,8 @@ from rest_framework.decorators import api_view
 from .models import FAQ, Document
 from .serializers import FAQSerializer, DocumentSerializer
 
-D_ID_API_KEY = 'amFpa3NkZXNhckBnbWFpbC5jb20:2Kvu_Oz56kresUrVghPSp'
-OPENAI_API_KEY = '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'
+D_ID_API_KEY = '#'
+OPENAI_API_KEY = '#'
 
 @api_view(["POST"])
 def ask_question(request):

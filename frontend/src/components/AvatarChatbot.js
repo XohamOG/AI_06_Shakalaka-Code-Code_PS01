@@ -31,8 +31,8 @@ function DIDChatbot() {
     script.src="https://agent.d-id.com/v1/index.js";
     script.setAttribute("data-name", "did-agent");
     script.setAttribute("data-mode", "fabio"); // Change to "widget" or "fullscreen" if needed
-    script.setAttribute("data-client-key", "Z29vZ2xlLW9hdXRoMnwxMDk4NTQ4NTk4MTQ3OTY0MDI2ODg6QlFNaFp6TGN4aEk2WU1wVFZaTXIt");
-    script.setAttribute("data-agent-id", "agt_cSWYN6Bt");
+    script.setAttribute("data-client-key", "Z29vZ2xlLW9hdXRoMnwxMTA4MTI3MzE0NzE1ODI2NzM2MjY6ZjBPU3l6U0UtTWgwOXZuUUVWd1Nn");
+    script.setAttribute("data-agent-id", "agt_WCqKlZPh");
     script.setAttribute("data-monitor", "true");
 
     document.body.appendChild(script);

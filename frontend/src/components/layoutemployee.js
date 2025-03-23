@@ -19,7 +19,7 @@ const ContentContainer = styled(Box)({
   height: "100vh",
   padding: "20px",
   position: "relative",
-  zIndex: 1, // Ensure content appears above background
+  zIndex: 1,
 });
 
 function Layout({ children }) {

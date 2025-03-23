@@ -1,7 +1,7 @@
 import React from "react";
-import Layout from "./layoutemployee"; // ✅ Import Layout component
-import AvatarChatbot from "./AvatarChatbot"; // ✅ Import AvatarChatbot component
-import DocumentUploader from "./DocumentUploader"; // ✅ Import KnowledgeUploader component
+import Layout from "./layoutemployee"; 
+import AvatarChatbot from "./AvatarChatbot";
+import DocumentUploader from "./DocumentUploader"; 
 
 const Employee = () => {
   return (

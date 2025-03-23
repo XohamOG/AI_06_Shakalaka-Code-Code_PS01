@@ -32,14 +32,14 @@ const DocumentUploader = () => {
       const base64Data = reader.result.split(",")[1]; // Extract base64 string
 
       const url =
-        "https://api.d-id.com/knowledge/knl_HwnYZBoCrIMpFVujSd6Kw/documents";
+        "https://api.d-id.com/knowledge/knl_TGHtQs5Pkj7r20O4ixmvG/documents";
       const options = {
         method: "POST",
         headers: {
           accept: "application/json",
           "content-type": "application/json",
           authorization:
-            "Basic TWpBeU15NXpiMmhoYlM1d1lYUnBiRUIyWlhNdVlXTXVhVzQ6OFNBNEV6NnVrbVdES2hvNERQcU40",
+            "Basic ZG1Wa1lYQmhkR3RwTVVCbmJXRnBiQzVqYjIwOk8wcDFab201TmRMNHNJUWZEeHgxbA==",
         },
         body: JSON.stringify({
           documentType: "pdf",

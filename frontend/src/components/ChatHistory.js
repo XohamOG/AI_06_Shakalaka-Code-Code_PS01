@@ -113,10 +113,10 @@ const ChatHistory = () => {
         headers: {
           accept: 'application/json',
           'content-type': 'application/json',
-          authorization: 'Basic TWpBeU15NXpiMmhoYlM1d1lYUnBiRUIyWlhNdVlXTXVhVzQ6OFNBNEV6NnVrbVdES2hvNERQcU40'
+          authorization: 'Basic ZG1Wa1lYQmhkR3RwTVVCbmJXRnBiQzVqYjIwOk8wcDFab201TmRMNHNJUWZEeHgxbA=='
         },
         body: JSON.stringify({
-          agent_id: 'agt_cSWYN6Bt', // Use your actual agent ID here
+          agent_id: 'agt_WCqKlZPh', // Use your actual agent ID here
           // No need to include chat_data as we're just exporting existing chats
         })
       };

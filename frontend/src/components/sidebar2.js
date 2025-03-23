@@ -88,22 +88,22 @@ const NavLink = styled('div')({
         }
     },
     '&.active': {
-        background: 'linear-gradient(45deg, rgba(138, 43, 226, 0.8) 30%, rgba(180, 90, 255, 0.8) 90%)', // Purple gradient for active state
-        boxShadow: '0 6px 10px rgba(0,0,0,0.3), 0 0 8px rgba(138, 43, 226, 0.3)', // Purple glow for active
+        background: 'linear-gradient(45deg, rgba(138, 43, 226, 0.8) 30%, rgba(180, 90, 255, 0.8) 90%)', 
+        boxShadow: '0 6px 10px rgba(0,0,0,0.3), 0 0 8px rgba(138, 43, 226, 0.3)',
     },
     '& .icon': {
         marginRight: '10px',
         fontSize: '20px',
         filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.3))',
-        color: '#d4b0ff', // Light purple tint for icons
+        color: '#d4b0ff',
     }
 });
 
 const Sidebar = () => {
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     const handleUploadDocument = () => {
-        navigate('/document-uploader'); // Navigate to the DocumentUploader page
+        navigate('/document-uploader'); 
     };
 
     return (

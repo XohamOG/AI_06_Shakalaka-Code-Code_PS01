@@ -10,17 +10,42 @@ const LayoutContainer = styled(Box)({
   width: "100%",
   overflow: "hidden",
   position: "relative",
+  background: "rgba(20, 20, 40, 0.8)", // Dark semi-transparent background for depth
+});
+
+const SidebarContainer = styled(Box)({
+  width: "250px",
+  minWidth: "250px",
+  height: "100vh",
+  zIndex: 2,
+  boxShadow: "4px 0 12px rgba(0, 0, 0, 0.3)",
 });
 
 const ContentContainer = styled(Box)({
   flexGrow: 1,
   display: "flex",
   flexDirection: "column",
-  overflow: "auto",
+  overflowY: "auto",
   height: "100vh",
-  padding: "20px",
+  padding: "30px",
   position: "relative",
   zIndex: 1, // Ensure content appears above background
+  backdropFilter: "blur(10px)", // Glassmorphism effect
+  WebkitBackdropFilter: "blur(10px)",
+  borderRadius: "12px",
+  background: "rgba(255, 255, 255, 0.08)", // Subtle transparent white
+  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+  transition: "all 0.3s ease-in-out",
+});
+
+const DocumentUploaderContainer = styled(Box)({
+  padding: "20px",
+  background: "rgba(255, 255, 255, 0.05)", // Light transparent white
+  borderRadius: "8px",
+  boxShadow: "0 2px 6px rgba(255, 255, 255, 0.1)",
+  backdropFilter: "blur(8px)",
+  WebkitBackdropFilter: "blur(8px)",
+  marginBottom: "20px",
 });
 
 function Layout({ children }) {
@@ -30,12 +55,20 @@ function Layout({ children }) {
       <SplineBackground />
 
       {/* Sidebar */}
-      <Sidebar />
+      <SidebarContainer>
+        <Sidebar />
+      </SidebarContainer>
 
-      <DocumentUploader />
+      {/* Main Content Area */}
+      <ContentContainer>
+        {/* Document Uploader Section */}
+        <DocumentUploaderContainer>
+          <DocumentUploader />
+        </DocumentUploaderContainer>
 
-      {/* Main Content */}
-      <ContentContainer>{children}</ContentContainer>
+        {/* Main Content */}
+        {children}
+      </ContentContainer>
     </LayoutContainer>
   );
 }

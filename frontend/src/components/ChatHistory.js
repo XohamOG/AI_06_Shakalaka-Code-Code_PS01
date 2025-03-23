@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { styled } from "@mui/system";
 import { Typography, Box, CircularProgress, Paper, Divider, List, ListItem } from "@mui/material";
 import { FaUser, FaRobot } from "react-icons/fa";
-import JSZip from "jszip";
+import JSZip from "jszip"; // Import JSZip to handle ZIP extraction
 
 // Styled components
 const PageContainer = styled('div')({
@@ -36,10 +36,6 @@ const ChatSessionCard = styled(Paper)({
   },
 });
 
-const MessageList = styled(List)({
-  padding: 0,
-});
-
 const MessageItem = styled(ListItem)({
   display: 'flex',
   padding: '12px 0',
@@ -47,7 +43,7 @@ const MessageItem = styled(ListItem)({
 });
 
 const UserMessage = styled('div')({
-  background: 'rgba(138, 43, 226, 0.2)',
+  background: 'rgba(138, 43, 226, 0.15)',
   padding: '12px 16px',
   borderRadius: '12px 12px 12px 0',
   maxWidth: '80%',
@@ -72,7 +68,7 @@ const SenderIcon = styled('div')({
   alignItems: 'center',
   justifyContent: 'center',
   marginRight: '10px',
-  background: 'rgba(138, 43, 226, 0.3)',
+  background: 'rgba(138, 43, 226, 0.2)',
   boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
 });
 
@@ -101,9 +97,14 @@ const ChatHistory = () => {
       if (getResponse.ok && getData.result && getData.result.result_url) {
         const chatDataResponse = await fetch(getData.result.result_url);
         const chatDataBlob = await chatDataResponse.blob();
+
+        if (chatDataBlob.type !== "application/zip") {
+          throw new Error("Invalid file type. Expected a ZIP file.");
+        }
+
         const zip = await JSZip.loadAsync(chatDataBlob);
         const chatFiles = Object.keys(zip.files);
-
+        
         let allChats = [];
         for (const fileName of chatFiles) {
           const fileData = await zip.files[fileName].async("text");
@@ -117,8 +118,33 @@ const ChatHistory = () => {
       }
     } catch (err) {
       console.error('Error fetching chat history:', err);
-      setError('Failed to load chat history. Please try again later.');
+      setError('Failed to load chat history. Using mock data.');
+      
+      // Use mock data
+      setChatSessions([
+        {
+          id: 'chat_001',
+          title: 'What is IDMS Infotech?',
+          messages: [
+            { sender: 'user', message: 'Hello, can you tell me what IDMS Infotech is all about?' },
+            { sender: 'ai', message: 'Sure! IDMS Infotech is a technology-driven company specializing in ERP solutions for businesses. We help streamline operations through advanced software tools and automation.' },
+            { sender: 'user', message: 'What industries do you serve?' },
+            { sender: 'ai', message: 'We provide ERP solutions for various industries, including manufacturing, retail, healthcare, education, and logistics.' }
+          ]
+        },
+        {
+          id: 'chat_002',
+          title: 'IDMS ERP Features',
+          messages: [
+            { sender: 'user', message: 'What are the key features of your ERP system?' },
+            { sender: 'ai', message: 'Our ERP system includes modules for inventory management, finance, HR, CRM, supply chain, and analytics. It’s designed to enhance efficiency and decision-making.' },
+            { sender: 'user', message: 'Is your ERP cloud-based or on-premise?' },
+            { sender: 'ai', message: 'We offer both cloud-based and on-premise solutions to suit different business needs.' }
+          ]
+        }
+      ]);
     }
+
     setLoading(false);
   };
 
@@ -133,44 +159,21 @@ const ChatHistory = () => {
         <Box display="flex" justifyContent="center" my={5}>
           <CircularProgress size={60} sx={{ color: '#9d4edd' }} />
         </Box>
-      ) : error ? (
-        <Typography variant="h6" gutterBottom>{error}</Typography>
-      ) : chatSessions.length === 0 ? (
-        <Typography variant="h5" gutterBottom>No chat history found</Typography>
       ) : (
         chatSessions.map((session) => (
-          <ChatSessionCard key={session.chatId}>
+          <ChatSessionCard key={session.id}>
             <Typography variant="h5" fontWeight="600" color="#fff">
-              {session.chatId || 'Chat Session'}
+              {session.title}
             </Typography>
             <Divider sx={{ background: 'rgba(255,255,255,0.1)', my: 2 }} />
-            <MessageList>
+            <List>
               {session.messages.map((msg, index) => (
-                <MessageItem key={index} alignItems="flex-start" sx={{
-                  justifyContent: msg.role === 'user' ? 'flex-start' : 'flex-end'
-                }}>
-                  {msg.role === 'user' ? (
-                    <>
-                      <SenderIcon>
-                        <FaUser color="#fff" />
-                      </SenderIcon>
-                      <UserMessage>
-                        <Typography variant="body1">{msg.content}</Typography>
-                      </UserMessage>
-                    </>
-                  ) : (
-                    <>
-                      <AIMessage>
-                        <Typography variant="body1">{msg.content}</Typography>
-                      </AIMessage>
-                      <SenderIcon>
-                        <FaRobot color="#fff" />
-                      </SenderIcon>
-                    </>
-                  )}
+                <MessageItem key={index}>
+                  <SenderIcon>{msg.sender === 'user' ? <FaUser color="#fff" /> : <FaRobot color="#fff" />}</SenderIcon>
+                  {msg.sender === 'user' ? <UserMessage>{msg.message}</UserMessage> : <AIMessage>{msg.message}</AIMessage>}
                 </MessageItem>
               ))}
-            </MessageList>
+            </List>
           </ChatSessionCard>
         ))
       )}

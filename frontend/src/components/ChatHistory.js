@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { styled } from "@mui/system";
 import { Typography, Box, CircularProgress, Paper, Divider, List, ListItem } from "@mui/material";
 import { FaUser, FaRobot } from "react-icons/fa";
+import JSZip from "jszip";
 
 // Styled components
 const PageContainer = styled('div')({
@@ -35,6 +36,46 @@ const ChatSessionCard = styled(Paper)({
   },
 });
 
+const MessageList = styled(List)({
+  padding: 0,
+});
+
+const MessageItem = styled(ListItem)({
+  display: 'flex',
+  padding: '12px 0',
+  borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+});
+
+const UserMessage = styled('div')({
+  background: 'rgba(138, 43, 226, 0.2)',
+  padding: '12px 16px',
+  borderRadius: '12px 12px 12px 0',
+  maxWidth: '80%',
+  marginLeft: '10px',
+  color: '#fff',
+});
+
+const AIMessage = styled('div')({
+  background: 'rgba(80, 60, 120, 0.3)',
+  padding: '12px 16px',
+  borderRadius: '12px 12px 0 12px',
+  maxWidth: '80%',
+  marginRight: '10px',
+  color: '#fff',
+});
+
+const SenderIcon = styled('div')({
+  width: '36px',
+  height: '36px',
+  borderRadius: '50%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginRight: '10px',
+  background: 'rgba(138, 43, 226, 0.3)',
+  boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
+});
+
 const ChatHistory = () => {
   const [chatSessions, setChatSessions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -43,7 +84,7 @@ const ChatHistory = () => {
   const fetchChatHistory = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const getUrl = 'https://api.d-id.com/agents/chats/exports/b1-om7vd';
       const getOptions = {
@@ -53,14 +94,24 @@ const ChatHistory = () => {
           authorization: 'Basic ZG1Wa1lYQmhkR3RwTVVCbmJXRnBiQzVqYjIwOk8wcDFab201TmRMNHNJUWZEeHgxbA=='
         }
       };
-      
+
       const getResponse = await fetch(getUrl, getOptions);
       const getData = await getResponse.json();
-      
+
       if (getResponse.ok && getData.result && getData.result.result_url) {
         const chatDataResponse = await fetch(getData.result.result_url);
-        const chatData = await chatDataResponse.json();
-        setChatSessions(chatData.chats || []);
+        const chatDataBlob = await chatDataResponse.blob();
+        const zip = await JSZip.loadAsync(chatDataBlob);
+        const chatFiles = Object.keys(zip.files);
+
+        let allChats = [];
+        for (const fileName of chatFiles) {
+          const fileData = await zip.files[fileName].async("text");
+          const jsonData = JSON.parse(fileData);
+          allChats.push(jsonData);
+        }
+
+        setChatSessions(allChats);
       } else {
         throw new Error(getData.message || 'Failed to fetch chat history');
       }
@@ -88,18 +139,38 @@ const ChatHistory = () => {
         <Typography variant="h5" gutterBottom>No chat history found</Typography>
       ) : (
         chatSessions.map((session) => (
-          <ChatSessionCard key={session.id}>
+          <ChatSessionCard key={session.chatId}>
             <Typography variant="h5" fontWeight="600" color="#fff">
-              {session.title || 'Chat Session'}
+              {session.chatId || 'Chat Session'}
             </Typography>
             <Divider sx={{ background: 'rgba(255,255,255,0.1)', my: 2 }} />
-            <List>
+            <MessageList>
               {session.messages.map((msg, index) => (
-                <ListItem key={index}>
-                  <Typography variant="body1">{msg.content}</Typography>
-                </ListItem>
+                <MessageItem key={index} alignItems="flex-start" sx={{
+                  justifyContent: msg.role === 'user' ? 'flex-start' : 'flex-end'
+                }}>
+                  {msg.role === 'user' ? (
+                    <>
+                      <SenderIcon>
+                        <FaUser color="#fff" />
+                      </SenderIcon>
+                      <UserMessage>
+                        <Typography variant="body1">{msg.content}</Typography>
+                      </UserMessage>
+                    </>
+                  ) : (
+                    <>
+                      <AIMessage>
+                        <Typography variant="body1">{msg.content}</Typography>
+                      </AIMessage>
+                      <SenderIcon>
+                        <FaRobot color="#fff" />
+                      </SenderIcon>
+                    </>
+                  )}
+                </MessageItem>
               ))}
-            </List>
+            </MessageList>
           </ChatSessionCard>
         ))
       )}

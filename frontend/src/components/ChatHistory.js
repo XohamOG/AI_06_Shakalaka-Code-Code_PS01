@@ -45,44 +45,24 @@ const ChatHistory = () => {
     setError(null);
     
     try {
-      const postUrl = 'https://api.d-id.com/agents/chats/exports';
-      const postOptions = {
-        method: 'POST',
+      const getUrl = 'https://api.d-id.com/agents/chats/exports/b1-om7vd';
+      const getOptions = {
+        method: 'GET',
         headers: {
           accept: 'application/json',
-          'content-type': 'application/json',
           authorization: 'Basic ZG1Wa1lYQmhkR3RwTVVCbmJXRnBiQzVqYjIwOk8wcDFab201TmRMNHNJUWZEeHgxbA=='
-        },
-        body: JSON.stringify({
-          agent_id: 'agt_WCqKlZPh'
-        })
+        }
       };
       
-      const postResponse = await fetch(postUrl, postOptions);
-      const postData = await postResponse.json();
+      const getResponse = await fetch(getUrl, getOptions);
+      const getData = await getResponse.json();
       
-      if (postResponse.ok) {
-        const chatExportId = postData.id;
-        
-        const getUrl = `https://api.d-id.com/agents/chats/exports/${chatExportId}`;
-        const getOptions = {
-          method: 'GET',
-          headers: {
-            accept: 'application/json',
-            authorization: 'Basic YW1GcGEzTmtaWE5oY2tCbmJXRnBiQzVqYjIwOndxNUtyUVlPcGdYSVNLdWVteWVjTg=='
-          }
-        };
-        
-        const getResponse = await fetch(getUrl, getOptions);
-        const getData = await getResponse.json();
-        
-        if (getResponse.ok) {
-          setChatSessions(getData.chats || []);
-        } else {
-          throw new Error(getData.message || 'Failed to fetch chat history');
-        }
+      if (getResponse.ok && getData.result && getData.result.result_url) {
+        const chatDataResponse = await fetch(getData.result.result_url);
+        const chatData = await chatDataResponse.json();
+        setChatSessions(chatData.chats || []);
       } else {
-        throw new Error(postData.message || 'Failed to initiate chat export');
+        throw new Error(getData.message || 'Failed to fetch chat history');
       }
     } catch (err) {
       console.error('Error fetching chat history:', err);
@@ -116,7 +96,7 @@ const ChatHistory = () => {
             <List>
               {session.messages.map((msg, index) => (
                 <ListItem key={index}>
-                  <Typography variant="body1">{msg.message}</Typography>
+                  <Typography variant="body1">{msg.content}</Typography>
                 </ListItem>
               ))}
             </List>
